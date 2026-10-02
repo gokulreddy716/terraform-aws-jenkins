@@ -13,13 +13,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                echo 'Checking out Terraform code from GitHub...'
-                checkout scm
-            }
-        }
-
         stage('Terraform Version') {
             steps {
                 bat 'terraform version'
@@ -40,17 +33,24 @@ pipeline {
 
         stage('Terraform Plan') {
             steps {
-                bat 'terraform plan -input=false -out=tfplan'
+                withCredentials([
+                    [$class: 'AmazonWebServicesCredentialsBinding',
+                     credentialsId: 'aws-terraform']
+                ]) {
+                    bat 'terraform plan -input=false -out=tfplan'
+                }
             }
         }
 
         stage('Terraform Apply') {
             steps {
+                input message: 'Do you want to apply Terraform changes?', ok: 'Apply'
+
                 withCredentials([
                     [$class: 'AmazonWebServicesCredentialsBinding',
                      credentialsId: 'aws-terraform']
                 ]) {
-                    bat 'terraform apply -input=false -auto-approve tfplan'
+                    bat 'terraform apply -auto-approve tfplan'
                 }
             }
         }

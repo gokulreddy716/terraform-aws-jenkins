@@ -23,3 +23,11 @@ resource "aws_vpc" "main" {
     Name = "terraform-vpc"
   }
 }
+
+resource "aws_vpc" "main" {
+  cidr_block = "18.0.0.0/16"
+
+  tags = {
+    Name = "terraform-vpc-2"
+  }
+}

@@ -44,8 +44,6 @@ pipeline {
 
         stage('Terraform Apply') {
             steps {
-                input message: 'Do you want to apply Terraform changes?', ok: 'Apply'
-
                 withCredentials([
                     [$class: 'AmazonWebServicesCredentialsBinding',
                      credentialsId: 'aws-terraform']

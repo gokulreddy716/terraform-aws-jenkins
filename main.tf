@@ -24,7 +24,7 @@ resource "aws_vpc" "main" {
   }
 }
 
-resource "aws_vpc" "main" {
+resource "aws_vpc" "vpc_main" {
   cidr_block = "18.0.0.0/16"
 
   tags = {

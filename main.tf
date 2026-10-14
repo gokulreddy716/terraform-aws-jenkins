@@ -41,7 +41,7 @@ resource "aws_vpc" "vpc1_main" {
 }
 
 resource "aws_instance" "example" {
-  ami           = "ami-0fef201115eefe936"
+  ami           = "ami-0cede6fe40e6ac719"
   instance_type = "t3.micro"
 
   tags = {
